@@ -3,13 +3,13 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    Enrollment_No = models.CharField(max_length=10, unique=True)
-    Name = models.CharField(max_length=100)
+    enrollment_no = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    Role_choices = [
+    role_choices = [
         ('Admin', 'Admin'),
         ('Member', 'Member')
     ]
-    Role = models.CharField(max_length=6, choices=Role_choices, default='Member')
+    role = models.CharField(max_length=6, choices=role_choices, default='Member')
     class Meta:
         db_table = 'todo'
