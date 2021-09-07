@@ -1,8 +1,13 @@
+from users.serializers import UserSerializer
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 import json
-
+from rest_framework import viewsets
+from .models import User
+# from requests.api import request
+from rest_framework.authentication import SessionAuthentication
+from .custompermissions import UserPermission
 from users.models import User
 # Create your views here.
 
@@ -24,5 +29,11 @@ def response_handle(request):
     # }
     #URL = "https://channeli.in/open_auth/get_user_data/?Authorization="+response1["token_type"]+" "+response1["access_token"]
     r = requests.get(url = "https://channeli.in/open_auth/get_user_data/", headers={"Authorization": f"{response1['token_type']} {response1['access_token']}"})
-    return HttpResponse(json.loads(r.content)['person']['roles'][1]['role'])
+    return HttpResponse(r.content)
     # return HttpResponse(response1["access_token"])
+
+class UserModelViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [UserPermission]

@@ -19,16 +19,17 @@ from django.urls import path, include
 from users.views import response_handle
 from project.views import ProjectModelViewSet, ProjectCardModelViewSet, ProjectListModelViewSet
 from rest_framework.routers import DefaultRouter
+from users.views import UserModelViewSet
 
 router1 = DefaultRouter()
 router2 = DefaultRouter()
 router3 = DefaultRouter()
-# router4 = DefaultRouter()
+router4 = DefaultRouter()
 # router5 = DefaultRouter()
 router1.register('projectapi', ProjectModelViewSet)
 router2.register('projectcardapi', ProjectCardModelViewSet)
 router3.register('projectlistapi', ProjectListModelViewSet)
-# router4.register('projectmembersapi', ProjectMembersModelViewSet)
+router4.register('userapi', UserModelViewSet)
 # router5.register('cardmembersapi', CardMembersModelViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,6 @@ urlpatterns = [
     path('project/', include(router1.urls)),
     path('projectcard/', include(router2.urls)),
     path('projectlist/', include(router3.urls)),
-    #path('projectmembers/', include(router4.urls)),
+    path('users/', include(router4.urls)),
     #path('cardmembers/', include(router5.urls))
 ]
