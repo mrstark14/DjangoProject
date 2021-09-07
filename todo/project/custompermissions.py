@@ -7,6 +7,12 @@ from users.models import User
 
 class ProjectPermission(BasePermission):
     def has_permission(self, request, view):
+        if request.method == 'GET':
+            user = User.objects.get(username=request.user.username)
+            if user.role != 'Admin' and len(request.get_full_path())==20:
+                return False
+            return request.user.is_authenticated
+        # print(request.data, "hello")
         return request.user.is_authenticated
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:

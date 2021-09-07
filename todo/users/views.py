@@ -1,6 +1,6 @@
 from users.serializers import UserSerializer
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, response
 import requests
 import json
 from rest_framework import viewsets
@@ -37,3 +37,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = [SessionAuthentication]
     permission_classes = [UserPermission]
+
+def test(request, id):
+    str1 = request.get_full_path()
+    return HttpResponse(str1)

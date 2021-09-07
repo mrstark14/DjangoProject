@@ -20,6 +20,7 @@ from users.views import response_handle
 from project.views import ProjectModelViewSet, ProjectCardModelViewSet, ProjectListModelViewSet
 from rest_framework.routers import DefaultRouter
 from users.views import UserModelViewSet
+# from users.views import test
 
 router1 = DefaultRouter()
 router2 = DefaultRouter()
@@ -38,5 +39,6 @@ urlpatterns = [
     path('projectcard/', include(router2.urls)),
     path('projectlist/', include(router3.urls)),
     path('users/', include(router4.urls)),
+    # path('test/<int:id>/', test),
     #path('cardmembers/', include(router5.urls))
 ]
