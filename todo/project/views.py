@@ -1,23 +1,38 @@
 from django.http import response
 from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
+from rest_framework import viewsets
+# from rest_framework.permissions import IsAuthenticated
+from .models import Project, ProjectCard, ProjectList
+from .serializers import ProjectSerializer, ProjectCardSerializer, ProjectListSerializer
+from rest_framework.authentication import SessionAuthentication
+from .custompermissions import ProjectPermission
 
-from .models import Project
-from .serializers import ProjectSerializer
+class ProjectModelViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [ProjectPermission]
+    # permission_classes = [IsAuthenticated]
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
-# Create your views here.
 
-# class ProjectView(APIView, UpdateModelMixin, DestroyModelMixin):
-#     def get(self, request, id=None):
-#         if id:
-#             try:
-#                 queryset = Project.objects.get(id = id)
-#             except:
-#                 return Response({'errors': 'This project does not exist.'}, status=400)
-#             read_serializer = ProjectSerializer(queryset)
-#         else:
-#             queryset = Project.objects.all()
-#             read_serializer = ProjectSerializer(queryset, many=True)
-#         return Response(read_serializer.data)
+class ProjectCardModelViewSet(viewsets.ModelViewSet):
+    queryset = ProjectCard.objects.all()
+    serializer_class = ProjectCardSerializer
+    #authentication_classes = [BasicAuthentication]
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [ProjectPermission]
+
+class ProjectListModelViewSet(viewsets.ModelViewSet):
+    queryset = ProjectList.objects.all()
+    serializer_class = ProjectListSerializer
+    #authentication_classes = [BasicAuthentication]
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [ProjectPermission]
+
+# class ProjectMembersModelViewSet(viewsets.ModelViewSet):
+#     queryset = ProjectMembers.objects.all()
+#     serializer_class = ProjectMembersSerializer
+
+# class CardMembersModelViewSet(viewsets.ModelViewSet):
+#     queryset = CardMembers.objects.all()
+#     serializer_class = CardMembersSerializer
