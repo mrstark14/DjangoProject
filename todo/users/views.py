@@ -38,6 +38,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
     permission_classes = [UserPermission]
 
-def test(request, id):
-    str1 = request.get_full_path()
-    return HttpResponse(str1)
+# def test(request, id):
+#     str1 = request.get_full_path()
+#     return HttpResponse(str1)
