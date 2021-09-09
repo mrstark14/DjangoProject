@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from .models import Project, ProjectCard, ProjectList
 from .serializers import ProjectSerializer, ProjectCardSerializer, ProjectListSerializer
 from rest_framework.authentication import SessionAuthentication
-from .custompermissions import ProjectPermission, CardPermission
+from .custompermissions import ProjectPermission, CardPermission, ListPermission
 
 class ProjectModelViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
@@ -28,7 +28,7 @@ class ProjectListModelViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectListSerializer
     #authentication_classes = [BasicAuthentication]
     authentication_classes = [SessionAuthentication]
-    permission_classes = [ProjectPermission]
+    permission_classes = [ListPermission]
 
 # class ProjectMembersModelViewSet(viewsets.ModelViewSet):
 #     queryset = ProjectMembers.objects.all()

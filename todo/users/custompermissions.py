@@ -4,7 +4,11 @@ from .models import User
 
 class UserPermission(BasePermission):
     def has_permission(self, request, view):
-        user = User.objects.get(username=request.user.username)
-        if user.role == 'Admin':
-            return True
+        if request.method == 'GET':
+            return request.user.is_authenticated
+        if request.user.is_authenticated:
+            user = User.objects.get(username=request.user.username)
+            if user.role == 'Admin':
+                return True
+            return False
         return False
