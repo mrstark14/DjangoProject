@@ -21,6 +21,12 @@ class ProjectListSerializer(serializers.ModelSerializer):
 #         model = ProjectMembers
 #         fields = ['name', 'role', 'project']
 
+class ProjectDetailSerializer(serializers.ModelSerializer):
+    projectlist_set = ProjectListSerializer(many = True)
+    class Meta:
+        model = Project
+        fields = ['id','project_name', 'due_date', 'project_leader', 'project_members', 'projectlist_set']
+
 # class CardMembersSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = CardMembers

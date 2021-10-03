@@ -20,6 +20,7 @@ from users.views import LoginClass
 from project.views import ProjectModelViewSet, ProjectCardModelViewSet, ProjectListModelViewSet
 from rest_framework.routers import DefaultRouter
 from users.views import UserModelViewSet
+from rest_framework_simplejwt import views as jwt_views
 # from users.views import test
 
 router = DefaultRouter()
@@ -27,15 +28,16 @@ router = DefaultRouter()
 # router3 = DefaultRouter()
 # router4 = DefaultRouter()
 # router5 = DefaultRouter()
-router.register('projectapi', ProjectModelViewSet)
-router.register('projectcardapi', ProjectCardModelViewSet)
-router.register('projectlistapi', ProjectListModelViewSet)
-router.register('userapi', UserModelViewSet)
+router.register('project', ProjectModelViewSet)
+router.register('projectcard', ProjectCardModelViewSet)
+router.register('projectlist', ProjectListModelViewSet)
+router.register('user', UserModelViewSet)
 # router5.register('cardmembersapi', CardMembersModelViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginClass.as_view()),
-    path('project/', include(router.urls)),
+    path('api/', include(router.urls)),
+    path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
     # path('projectcard/', include(router2.urls)),
     # path('projectlist/', include(router3.urls)),
     # path('users/', include(router4.urls)),

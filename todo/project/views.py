@@ -3,16 +3,16 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # from rest_framework.permissions import IsAuthenticated
 from .models import Project, ProjectCard, ProjectList
-from .serializers import ProjectSerializer, ProjectCardSerializer, ProjectListSerializer
+from .serializers import ProjectSerializer, ProjectCardSerializer, ProjectListSerializer, ProjectDetailSerializer
 from rest_framework.authentication import SessionAuthentication
 from .custompermissions import ProjectPermission, CardPermission, ListPermission
 
 class ProjectModelViewSet(viewsets.ModelViewSet):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [ProjectPermission]
+    # authentication_classes = [SessionAuthentication]
+    # permission_classes = [ProjectPermission]
     # permission_classes = [IsAuthenticated]
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer    
+    serializer_class = ProjectDetailSerializer
 
 
 class ProjectCardModelViewSet(viewsets.ModelViewSet):
