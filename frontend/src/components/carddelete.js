@@ -15,13 +15,25 @@ export default function Deletecard( match ) {
             }
         }).then(
             (res) => {
-                window.location.href = `http://127.0.0.1:3000/list/${match.match.params.listid}`
+                window.location.href = `http://127.0.0.1:3000/${match.match.params.projectid}/list/${match.match.params.listid}`
             }
         ).catch( err => {
             alert(err)
-            window.location.href = `http://127.0.0.1:3000/list/${match.match.params.listid}`
+            window.location.href = `http://127.0.0.1:3000/${match.match.params.projectid}/list/${match.match.params.listid}`
         })
+        
     }
+
+    useEffect(() => {
+        loginCheck();
+    },[])
+
+    const loginCheck = () => {
+        if (Cookies.get("token")==null) {
+            window.location.href = 'http://127.0.0.1:3000/login/'
+        }
+    }
+    
     return (
         <>
         </>

@@ -45,6 +45,16 @@ export default function AddProject() {
     const [description, setDescription] = useState([]);
 
     useEffect(() => {
+        loginCheck();
+    },[])
+
+    const loginCheck = () => {
+        if (Cookies.get("token")==null) {
+            window.location.href = 'http://127.0.0.1:3000/login/'
+        }
+    }
+
+    useEffect(() => {
         fetchUsers();
     },[]);
 

@@ -24,18 +24,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const Logout = ()  => {
-    axios.get('http://127.0.0.1:8000/logout/', {withCredentials: true}).then(
-      (res) => {
-        Cookies.remove('token');
-        Cookies.remove('csrftoken');
-        Cookies.remove('sessionid');
-        Cookies.remove('username')
-        console.log(res.data)
-      }
-    ).catch(err => {
-      alert('Error faced while logging out')
-    })
-    window.location.href = 'http://127.0.0.1:3000/login'
+    window.location.href = 'http://127.0.0.1:3000/logout'
   };
 
   const handleClose = () => {

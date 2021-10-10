@@ -4,6 +4,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { Card, CardActions, CardContent, Grid, Typography, Button } from "@material-ui/core";
 import Userupdate from "./updaterole";
+import Checklogin from "./checklogin";
 
 function User() {
     const [users, setUsers] = useState([]);
@@ -30,6 +31,7 @@ function User() {
 
     return (
         <div style={{ marginTop: 20, padding: 30 }}>
+            <Checklogin />
             <div>
                 <Typography variant='h4' style={{ marginLeft: '3%'}}>
                     Users: 

@@ -10,6 +10,7 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import Checklogin from "./checklogin";
 
 function ProjectDetail( match ) {
     const [projects, setProject] = useState([]);
@@ -100,6 +101,7 @@ function ProjectDetail( match ) {
 
     return (
         <div style = {{ marginTop: 20, padding: 30 }}>
+            <Checklogin />
             <div>
                 <Typography variant='h4' style={{ marginLeft: '3%'}}>
                     Project: {projects.project_name}
@@ -141,7 +143,7 @@ function ProjectDetail( match ) {
                             </CardContent>
                             <CardActions>
                                 <Button size="small" color="primary" onClick={() => {
-                                    window.location.href=`http://127.0.0.1:3000/list/${list.id}/`
+                                    window.location.href=`http://127.0.0.1:3000/${match.match.params.id}/list/${list.id}/`
                                 }}>
                                     Learn More
                                 </Button>

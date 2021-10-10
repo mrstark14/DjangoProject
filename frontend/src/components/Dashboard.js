@@ -10,6 +10,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import ProjectList from "./Projectlist";
 import CancelIcon from '@material-ui/icons/Cancel';
+import Checklogin from "./checklogin";
 // import { differenceInCalendarMonths } from "date-fns/esm";
 
 function Dashboard( props ) {
@@ -71,6 +72,7 @@ function Dashboard( props ) {
 
     return (
         <div style={{ marginTop: 20, padding: 30 }}>
+            <Checklogin />
             <div>
                 <Typography variant='h4' style={{ marginLeft: '3%'}}>
                     Hello {user.name}! 

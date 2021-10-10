@@ -5,6 +5,7 @@ import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mater
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Userchip from "./userchip";
 import DeleteIcon from '@material-ui/icons/Delete';
+import Checklogin from "./checklogin";
 
 export default function Listdetail( match ){
     const [list, SetList] = useState([]);
@@ -47,7 +48,21 @@ export default function Listdetail( match ){
     };
 
     const addcard = () => {
-        window.location.href = `http://127.0.0.1:3000/${match.match.params.id}/createcard`
+        window.location.href = `http://127.0.0.1:3000/${match.match.params.projectid}/${match.match.params.id}/createcard`
+    }
+
+    const deletelist = () => {
+        axios.delete(`http://127.0.0.1:8000/api/projectlist/${match.match.params.id}`, {
+            headers : {
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        }).then(
+            (res) => {
+                window.location.href = `http://127.0.0.1:3000/project/${match.match.params.projectid}`
+            }
+        ).catch(err => {
+            alert(err)
+        })
     }
 
     // const deleteCard = (id) => {
@@ -60,6 +75,7 @@ export default function Listdetail( match ){
 
     return (
         <div style = {{ marginTop: 20, padding: 30 }}>
+            <Checklogin />
             <div>
                 <Typography variant='h3' style={{ marginLeft: '3.2%' }}>
                     List: {list.list_name}
@@ -68,40 +84,42 @@ export default function Listdetail( match ){
             <Button variant="contained" color="primary" margin="normal" style={{ marginLeft: '3.2%' }} startIcon={<AddBoxIcon />} disableElevation onClick={addcard}>
                 Add Card
             </Button>
-            <Button variant="contained" color="primary" margin="normal" style={{ marginLeft: 10 }} startIcon={<DeleteIcon />} disableElevation onClick={addcard}>
+            <Button variant="contained" color="primary" margin="normal" style={{ marginLeft: 10 }} startIcon={<DeleteIcon />} disableElevation onClick={deletelist}>
                 Delete 
             </Button>
-            <Grid container spacing={40} justify="flex-start">
-                {cards.map(card => (
-                    <Grid item key={card.id} style={{ margin: '3%', width: 400, marginTop: 20}} minWidth={70}>
-                        <Card style={{marginLeft: '1%'}}>
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {card.card_name}
-                                </Typography>
-                                <Typography component="p" dangerouslySetInnerHTML={{__html: card.description}}></Typography>
-                                <Typography component="p">Card Members: 
-                                    {card.card_members.map(member => (
-                                        <Userchip userid={member} />
-                                    ))}
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small" color="primary" onClick={() => {
-                                    window.location.href=`http://127.0.0.1:3000/list/${match.match.params.id}/updatecard/${card.id}`
-                                }}>
-                                    Update
-                                </Button>
-                                <Button size="small" color="primary" onClick = {() => {
-                                    window.location.href=`http://127.0.0.1:3000/${match.match.params.id}/deletecard/${card.id}`
-                                }}>
-                                    Delete
-                                </Button>
-                            </CardActions>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+            <div style={{float:'center'}}>
+                <Grid container spacing={40} justify="center">
+                    {cards.map(card => (
+                        <Grid item key={card.id} style={{ margin: '3%', width: 400, marginTop: 20}} minWidth={70}>
+                            <Card style={{marginLeft: '1%'}}>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        {card.card_name}
+                                    </Typography>
+                                    <Typography component="p" dangerouslySetInnerHTML={{__html: card.description}}></Typography>
+                                    <Typography component="p">Card Members: 
+                                        {card.card_members.map(member => (
+                                            <Userchip userid={member} />
+                                        ))}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small" color="primary" onClick={() => {
+                                        window.location.href=`http://127.0.0.1:3000/${match.match.params.projectid}/list/${match.match.params.id}/updatecard/${card.id}`
+                                    }}>
+                                        Update
+                                    </Button>
+                                    <Button size="small" color="primary" onClick = {() => {
+                                        window.location.href=`http://127.0.0.1:3000/${match.match.params.projectid}/${match.match.params.id}/deletecard/${card.id}`
+                                    }}>
+                                        Delete
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
         </div>
     )
 

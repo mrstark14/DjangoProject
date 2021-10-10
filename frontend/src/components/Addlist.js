@@ -14,6 +14,16 @@ export default function Addlist( match ) {
     const [listname, SetListname] = useState([])
 
     useEffect(() => {
+        loginCheck();
+    },[])
+
+    const loginCheck = () => {
+        if (Cookies.get("token")==null) {
+            window.location.href = 'http://127.0.0.1:3000/login/'
+        }
+    }
+
+    useEffect(() => {
         fetchProject();
     },[]);
 

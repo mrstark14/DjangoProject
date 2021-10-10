@@ -39,12 +39,19 @@ export default function Updatecard( match ) {
     const classes = useStyle
 
     const [project_name, setProjectname] = useState([]);
-    const [due_date, setDuedate] = useState(new Date());
     const [listid, setlistid] = useState(match.match.params.id);
-    const [project_leader, setProjectleader] = useState([]);
     const [description, setDescription] = useState([]);
     const [project_members, setProjectmembers] = useState([]);
-    const [card, Setcard] = useState([]);
+
+    useEffect(() => {
+        loginCheck();
+    },[])
+
+    const loginCheck = () => {
+        if (Cookies.get("token")==null) {
+            window.location.href = 'http://127.0.0.1:3000/login/'
+        }
+    }
     
     useEffect(() => {
         fetchCard();
@@ -57,7 +64,6 @@ export default function Updatecard( match ) {
             }
         }).then(
             (res)  => {
-                Setcard(res.data)
                 setProjectname(res.data.card_name)
                 setProjectmembers(res.data.card_members)
                 setDescription(res.data.description)
@@ -65,6 +71,10 @@ export default function Updatecard( match ) {
         ).catch(err=>{
             alert(err);
         })
+    }
+
+    const handleClose = () => {
+        window.location.href = `http://127.0.0.1:3000/${match.match.params.projectid}/list/${match.match.params.id}`
     }
 
     useEffect(() => {
@@ -84,29 +94,6 @@ export default function Updatecard( match ) {
             console.log("Error")
         })
     };
-
-    const handleDateChange = (date) => {
-        // console.log(date);
-        setDuedate(date);
-    };
-    
-    const handleClose = () => {
-        window.location.href = `http://127.0.0.1:3000/list/${match.match.params.id}`
-    }
-    
-    function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
-        if (month.length < 2) 
-            month = '0' + month;
-        if (day.length < 2) 
-            day = '0' + day;
-    
-        return [year, month, day].join('-');
-    }
 
     const handleSubmit = async(e) => {
         e.preventDefault();

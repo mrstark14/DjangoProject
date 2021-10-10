@@ -19,6 +19,7 @@ import AddCard from './components/Addcard';
 import Listdetail from './components/listdetail';
 import Deletecard from './components/carddelete';
 import Updatecard from './components/Updatecard';
+import Logoutfunc from './components/logout';
 
 function App() {
   // const [token, setToken] = useState('')
@@ -47,10 +48,9 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Checklogin />
         <Navbar />
         <Switch>
-          <Route path="/login" exact component={Login} />
+          <Route exact path="/login" component={Login} />
           <Route path="/project/create" exact component={AddProject} />
           <Route path="/project/:id" exact component={ProjectDetail} />
           <Route path="/users" exact component={User} />
@@ -59,10 +59,12 @@ function App() {
           <Route path="/project/:id/update" exact component={UpdateProject} />
           <Route path="/oauth/" exact component={Oauth} />
           <Route path="/project/:id/createlist" exact component={Addlist} />
-          <Route path="/:id/createcard" exact component={AddCard} />
-          <Route path="/list/:id" exact component={Listdetail} />
-          <Route path="/:listid/deletecard/:cardid" exact component={Deletecard} />
-          <Route path="/list/:id/updatecard/:cardid" exact component={Updatecard} />
+          <Route path="/:projectid/:id/createcard" exact component={AddCard} />
+          <Route path="/:projectid/list/:id" exact component={Listdetail} />
+          <Route path="/:projectid/:listid/deletecard/:cardid" exact component={Deletecard} />
+          <Route path="/:projectid/list/:id/updatecard/:cardid" exact component={Updatecard} />
+          <Route exact path="/logout" component={Logoutfunc} />
+          <Route exact path="" component={Checklogin} />
           {/* <Route path="/test/" exact component={Contact} /> */}
         </Switch>
       </div>

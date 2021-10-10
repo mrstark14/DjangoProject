@@ -8,6 +8,7 @@ import { KeyboardDatePicker,MuiPickersUtilsProvider } from "@material-ui/pickers
 import DateFnsUtils from '@date-io/date-fns';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Checklogin from './checklogin'
 
 const useStyle = makeStyles(theme =>({
     root:{
@@ -63,13 +64,23 @@ export default function AddCard( match ) {
         })
     };
 
+    useEffect(() => {
+        loginCheck();
+    },[])
+
+    const loginCheck = () => {
+        if (Cookies.get("token")==null) {
+            window.location.href = 'http://127.0.0.1:3000/login/'
+        }
+    }
+
     const handleDateChange = (date) => {
         // console.log(date);
         setDuedate(date);
     };
     
     const handleClose = () => {
-        window.location.href = 'http://127.0.0.1:3000/dashboard/'
+        window.location.href = `http://127.0.0.1:3000/${match.match.params.projectid}/list/${match.match.params.id}`
     }
     
     function formatDate(date) {
@@ -110,7 +121,7 @@ export default function AddCard( match ) {
             console.log(err)
         })
 
-        // handleClose();
+        handleClose();
 
     };
     
