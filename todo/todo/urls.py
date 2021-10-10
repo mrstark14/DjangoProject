@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.http import response
 from django.urls import path, include
 from users.views import LoginClass
-from project.views import ProjectModelViewSet, ProjectCardModelViewSet, ProjectListModelViewSet
+from project.views import ProjectModelViewSet, ProjectCardModelViewSet, ProjectListModelViewSet, DashboardProjectViewset, ProjectListViewset, ListCardViewset
 from rest_framework.routers import DefaultRouter
-from users.views import UserModelViewSet
+from users.views import UserModelViewSet, ObtainToken, LogoutClass
 from rest_framework_simplejwt import views as jwt_views
 # from users.views import test
 
@@ -32,12 +32,16 @@ router.register('project', ProjectModelViewSet)
 router.register('projectcard', ProjectCardModelViewSet)
 router.register('projectlist', ProjectListModelViewSet)
 router.register('user', UserModelViewSet)
+router.register('userproject', DashboardProjectViewset, basename="userprojects")
+router.register('projectlists', ProjectListViewset, basename="projectlists")
+router.register('card', ListCardViewset, basename="card")
 # router5.register('cardmembersapi', CardMembersModelViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginClass.as_view()),
     path('api/', include(router.urls)),
-    path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
+    path('token/obtain/', ObtainToken.as_view(), name='token_create'),
+    path('logout/', LogoutClass.as_view(), name='log_out')
     # path('projectcard/', include(router2.urls)),
     # path('projectlist/', include(router3.urls)),
     # path('users/', include(router4.urls)),

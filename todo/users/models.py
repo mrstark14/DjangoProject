@@ -10,6 +10,8 @@ class User(AbstractUser):
         ('Admin', 'Admin'),
         ('Member', 'Member')
     ]
+    password = models.CharField(null = True, blank = True, max_length=100)
     role = models.CharField(max_length=6, choices=role_choices, default='Member')
     class Meta:
         db_table = 'todo'
+    

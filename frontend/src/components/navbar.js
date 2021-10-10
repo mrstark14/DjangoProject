@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,14 +6,16 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
+import axios from 'axios'
+import Cookies from 'js-cookie';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 //import ModalDialog from './ModalDialog';
 
 const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
+  root : {
+    margin: "5px 0px"
   },
 }));
 
@@ -21,31 +23,57 @@ const Navbar = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const Logout = ()  => {
+    axios.get('http://127.0.0.1:8000/logout/', {withCredentials: true}).then(
+      (res) => {
+        Cookies.remove('token');
+        Cookies.remove('csrftoken');
+        Cookies.remove('sessionid');
+        Cookies.remove('username')
+        console.log(res.data)
+      }
+    ).catch(err => {
+      alert('Error faced while logging out')
+    })
+    window.location.href = 'http://127.0.0.1:3000/login'
   };
 
   const handleClose = () => {
-    setOpen(false);
+  setOpen(false);
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="primary">
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-          Title
+        <Typography variant="h6" color="inherit">
+          Welcome 
         </Typography>
-        <Button color="inherit" onClick={handleOpen}>
-          Signup
-        </Button>
+        <List component="nav">
+          <ListItem component="div">
+            <ListItemText inset>
+              <Typography variant = "h6" color = "inherit">
+                <a href = "http://127.0.0.1:3000/dashboard/">Home</a>
+              </Typography>
+            </ListItemText>
+            <ListItemText inset>
+              <Typography variant = "h6" color = "inherit">
+                <a href = "http://127.0.0.1:3000/users/">Users</a>
+              </Typography>
+            </ListItemText>
+            <ListItemText inset>
+              <Typography variant = "h6" color = "inherit">
+                <a href = "http://127.0.0.1:3000/project/create/">Add Project</a>
+              </Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+        <ListItemText inset>
+              <Typography variant = "h6" color = "inherit" align="right">
+                <Button color="inherit" onClick={Logout} variant="h6">
+                  Logout
+                </Button>
+              </Typography>
+            </ListItemText>
       </Toolbar>
     </AppBar>
   );
