@@ -55,7 +55,7 @@ export default function Updatecard( match ) {
     
     useEffect(() => {
         fetchCard();
-    })
+    },[])
 
     const fetchCard = async () => {
         await axios.get(`http://127.0.0.1:8000/api/projectcard/${match.match.params.cardid}`, {
